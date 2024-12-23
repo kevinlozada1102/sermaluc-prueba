@@ -1,0 +1,38 @@
+{
+	"info": {
+		"_postman_id": "7be69bad-794a-4945-8d45-bb3f4fe12149",
+		"name": "Proyecto",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2745370"
+	},
+	"item": [
+		{
+			"name": "Crear usuario",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\" : \"Kevin Lozada\",\r\n    \"email\" : \"kevinlozada1102@gmail.com\",\r\n    \"password\" : \"Arnold11&\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/users/create-user",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"create-user"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
