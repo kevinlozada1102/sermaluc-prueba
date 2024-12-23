@@ -35,25 +35,28 @@ public class UserService {
             apiResponse.setStatusCode(HttpStatus.BAD_REQUEST.value());
             apiResponse.setMensaje("El correo ya se encuentra registrado");
         } else {
-            // VALIDAR CORREO
-            LocalDateTime now = Utils.getCurrentDateTime();
-            UserEntity user = new UserEntity();
-            user.setName(userRequest.getName());
-            user.setEmail(userRequest.getEmail());
-            user.setPassword(userRequest.getPassword());
-            user.setName(userRequest.getName());
-            user.setCreated(now);
-            user.setModified(now);
-            user.setLastLogin(now);
-            user.setIsActive(Constants.ACTIVE_FIELD);
-            String token = jwtUtils.generateAccessToken(user.getEmail());
-            user.setToken(token);
-            userRepository.save(user);
+            if (Utils.isValidEmail(userRequest.getEmail())) {
+                LocalDateTime now = Utils.getCurrentDateTime();
+                UserEntity user = new UserEntity();
+                user.setName(userRequest.getName());
+                user.setEmail(userRequest.getEmail());
+                user.setPassword(userRequest.getPassword());
+                user.setName(userRequest.getName());
+                user.setCreated(now);
+                user.setModified(now);
+                user.setLastLogin(now);
+                user.setIsActive(Constants.ACTIVE_FIELD);
+                String token = jwtUtils.generateAccessToken(user.getEmail());
+                user.setToken(token);
+                userRepository.save(user);
 
-            apiResponse.setStatusCode(HttpStatus.CREATED.value());
-            apiResponse.setMensaje("Usuario registrado correctamente");
-            apiResponse.setData(convertToUserResponse(user));
-
+                apiResponse.setStatusCode(HttpStatus.CREATED.value());
+                apiResponse.setMensaje("Usuario registrado correctamente");
+                apiResponse.setData(convertToUserResponse(user));
+            } else {
+                apiResponse.setStatusCode(HttpStatus.BAD_REQUEST.value());
+                apiResponse.setMensaje("El correo no cumple con el formato correcto");
+            }
         }
         return apiResponse;
     }
